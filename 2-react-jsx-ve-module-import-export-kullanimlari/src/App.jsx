@@ -3,7 +3,7 @@ import './App.css'
 import UserList, {SingleUser, ITEMS} from "./components/UserList"
 import Button from "./components/Button"
 import ImgThumbnail from "./components/ImgThumbnail"
-import { IMAGES } from "./data"
+import { IMAGES, INFO } from "./data"
 import Card from "./components/Card"
 import ConditionalRenderedUserList from "./components/ConditionalRenderedUserList"
 
@@ -110,8 +110,20 @@ function App() {
             <p>Tempore, doloribus sapiente!</p>    
         </Card>
         <hr />
-        <ConditionalRenderedUserList isActive={false} />
+        <ConditionalRenderedUserList isActive={true} isLoading={true} />
+        <h2>Optional Chaining</h2>
+        {/* {
+        INFO.productzzzzzzzzz.map(
+            (product, index) => <li key={index}>{product}</li>
+            )
+        } */}
+        {
+        INFO.products?.map(
+            (product, index) => <li key={index}>{product}</li>
+            )
+        }
         </>
+
     )
 }
 
