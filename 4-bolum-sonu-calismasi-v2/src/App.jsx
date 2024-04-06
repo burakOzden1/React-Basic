@@ -27,9 +27,9 @@ function App() {
         isActive: false
       }
     })
-    // console.log("App product ID: ", productId)
-    // console.log("App product: ", selectedProduct)
-    // console.log("App Not Selected Products :) ", notSelectedProducts)
+    console.log("App product ID: ", productId)
+    console.log("App product: ", selectedProduct)
+    console.log("App Not Selected Products :) ", notSelectedProducts)
 
     const newProducts = [
       ...notSelectedProducts,
