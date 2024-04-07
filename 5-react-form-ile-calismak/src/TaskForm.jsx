@@ -17,13 +17,19 @@ export default function TaskForm() {
     }
 
     function removeTask(uuid) {
-        console.log(uuid)
         setTasks(prev => prev.filter(item => item.uuid !== uuid))
+    }
+
+    function editTask(uuid) {
+        console.log(uuid);
+        const task = tasks.find(item => item.uuid === uuid)
+        // console.log(task)
+        setFormData(task)
     }
 
     function handleFormSubmit(event) {
         event.preventDefault()
-        console.log(formData)
+        // console.log(formData)
         if (formData.task.length > 3) {
             formData.uuid = uuidv4()
             setTasks(
@@ -31,7 +37,7 @@ export default function TaskForm() {
             )
             setFormData(emptyForm)
             event.target.reset()
-            console.log(tasks)
+            // console.log(tasks)
         }
     }
     
@@ -41,13 +47,13 @@ export default function TaskForm() {
             <div className="row mb-3">
                 <label htmlFor="task" className="col-sm-2 col-form-label">Task</label>
                 <div className="col-sm-10">
-                <input type="text" className="form-control" id="task" name="task" onChange={handleInputChange} />
+                <input type="text" className="form-control" id="task" name="task" value={formData.task} onChange={handleInputChange} />
                 </div>
             </div>
             <div className="row mb-3">
                 <div className="col-sm-10 offset-sm-2">
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="priority" name="priority" onChange={handleInputChange} />
+                    <input className="form-check-input" type="checkbox" id="priority" name="priority" checked={formData.priority} onChange={handleInputChange} />
                     <label className="form-check-label" htmlFor="priority">
                     Öncelikli
                     </label>
@@ -57,7 +63,7 @@ export default function TaskForm() {
             <button type="submit" className="btn btn-primary">Kaydet</button>
         </form>
 
-        <TaskList tasks={tasks} removeTask={removeTask} />
+        <TaskList tasks={tasks} removeTask={removeTask} editTask={editTask} />
     </>
     )
 }
