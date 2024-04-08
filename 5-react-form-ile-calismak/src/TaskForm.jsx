@@ -3,7 +3,7 @@ import { useState } from "react"
 import TaskList from "./TaskList"
 
 export default function TaskForm() {
-    const emptyForm = {task: "", priority: false}
+    const emptyForm = {task: "", priority: false, isDone: false}
     const [ formData, setFormData ] = useState({emptyForm})
     const [tasks, setTasks] = useState([])
 
@@ -20,8 +20,18 @@ export default function TaskForm() {
         setTasks(prev => prev.filter(item => item.uuid !== uuid))
     }
 
+    function doneTask(uuid) {
+        const taskIndex = tasks.findIndex(item => item.uuid === uuid)
+        const task = tasks[taskIndex]
+        task.isDone = !task.isDone
+        const newTasks = tasks.slice()
+        newTasks[taskIndex] = task
+        setTasks(newTasks)
+        console.log(newTasks)
+    }
+    
     function editTask(uuid) {
-        console.log(uuid);
+        // console.log(uuid);
         const task = tasks.find(item => item.uuid === uuid)
         // console.log(task)
         setFormData({...task, isEdited: true})
@@ -68,7 +78,7 @@ export default function TaskForm() {
             <button type="submit" className="btn btn-primary">Kaydet</button>
         </form>
 
-        <TaskList tasks={tasks} removeTask={removeTask} editTask={editTask} />
+        <TaskList tasks={tasks} removeTask={removeTask} editTask={editTask} doneTask={doneTask} />
     </>
     )
 }
