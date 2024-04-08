@@ -1,11 +1,12 @@
 import {v4 as uuidv4} from 'uuid';
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import TaskList from "./TaskList"
 
 export default function TaskForm() {
     const emptyForm = {task: "", priority: false, isDone: false}
     const [ formData, setFormData ] = useState({emptyForm})
     const [tasks, setTasks] = useState([])
+    const [taskChangeCount, setTaskChangeCount] = useState(0)
 
     function handleInputChange(event) {
         setFormData(prev => {
@@ -15,10 +16,25 @@ export default function TaskForm() {
             }
         })
     }
-
+    
     function removeTask(uuid) {
         setTasks(prev => prev.filter(item => item.uuid !== uuid))
+        setTaskChangeCount(prev => prev + 1)
     }
+
+    // sayfa ilk acildiginda islem yap...
+    // useEffect(() => {}, []) // sayfa ilk acilinca
+    useEffect(() => {
+        const localStorageTasks = JSON.parse(localStorage.getItem("tasks"))
+        setTasks(localStorageTasks ?? [])
+    }, [])
+
+    // tasks bilgisi degisince islem yap
+    useEffect(() => {
+        if (taskChangeCount > 0) {
+            localStorage.setItem("tasks", JSON.stringify(tasks))
+        }
+    }, [taskChangeCount])
 
     function doneTask(uuid) {
         const taskIndex = tasks.findIndex(item => item.uuid === uuid)
@@ -28,6 +44,7 @@ export default function TaskForm() {
         newTasks[taskIndex] = task
         setTasks(newTasks)
         console.log(newTasks)
+        setTaskChangeCount(prev => prev + 1)
     }
     
     function editTask(uuid) {
@@ -35,8 +52,9 @@ export default function TaskForm() {
         const task = tasks.find(item => item.uuid === uuid)
         // console.log(task)
         setFormData({...task, isEdited: true})
+        setTaskChangeCount(prev => prev + 1)
     }
-
+    
     function handleFormSubmit(event) {
         event.preventDefault()
         if (formData.isEdited) {
@@ -51,13 +69,14 @@ export default function TaskForm() {
                 prev => [formData, ...prev]
             )
         }
+        setTaskChangeCount(prev => prev + 1)
         setFormData(emptyForm)
         event.target.reset()
         console.log(formData)
     }
     
     return (
-    <>
+        <>
         <form onSubmit={handleFormSubmit}>
             <div className="row mb-3">
                 <label htmlFor="task" className="col-sm-2 col-form-label">Task</label>
