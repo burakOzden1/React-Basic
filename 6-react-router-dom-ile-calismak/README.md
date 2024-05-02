@@ -23,10 +23,10 @@ http://localhost:3000
 ```
 
 
-- [ ] React-Router-Dom ve Bootstrap Kurulumu
-- [ ] navbar Olusturulmasi
-- [ ] Sayfa Yapisinin Olusturulmasi
-- [ ] Sayfalara React Router Dom Uzerinde Ulasilabilmesi
+- [X] React-Router-Dom ve Bootstrap Kurulumu
+- [X] navbar Olusturulmasi
+- [X] Sayfa Yapisinin Olusturulmasi
+- [X] Sayfalara React Router Dom Uzerinde Ulasilabilmesi
 - [ ] Urunler kisminin olusturulmasi
 - [ ] Ana sayfada 10 urun gosterilmesi
 - [ ] Urun Layout yapisinin olusturulmasi -> Kategoriler ve son 5 urunun linki
